@@ -8,7 +8,7 @@ public class Main {
 
         new RunTerminal();
         XmlParser x=new XmlParser();
-        x.ReadXml();
+        x.readXML();
 
     }
 }

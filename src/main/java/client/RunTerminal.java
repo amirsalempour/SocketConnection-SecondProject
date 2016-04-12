@@ -14,7 +14,7 @@ public class RunTerminal {
     public RunTerminal(){
     try {
         InetAddress host = InetAddress.getLocalHost();
-        Socket socket = new Socket(host.getHostAddress(), 8080);
+        Socket socket = new Socket(host.getHostAddress(),14793);
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(" Hello There");
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());

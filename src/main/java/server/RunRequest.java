@@ -19,9 +19,9 @@ public class RunRequest {
 
     public RunRequest() throws Exception {
 
-        port = 7777;
+        port = 8080;
         try {
-            serverSocket = new ServerSocket(port,20);
+            serverSocket = new ServerSocket(port);
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -14,8 +14,6 @@ public class ConnectionHandler implements Runnable{
         this.socket=socket;
         Thread t=new Thread(this);
         t.start();
-
-
     }
 
     @Override
@@ -36,7 +34,7 @@ public class ConnectionHandler implements Runnable{
             ois.close();
             oos.close();
             socket.close();
-            System.out.println("waiting for client mesage...");
+            System.out.println("waiting for client message...");
          } catch (IOException e) {
             e.printStackTrace();
         }

@@ -6,7 +6,11 @@ package server;
 public class Main {
     public static void main(String[] args) throws Exception {
 
+        JsonParser j=new JsonParser();
+
         RunRequest runRequest = new RunRequest();
         runRequest.handleConnection();
+
+
     }
 }

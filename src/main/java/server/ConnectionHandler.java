@@ -20,7 +20,7 @@ public class ConnectionHandler implements Runnable{
     public void run() {
         try
         {
-           // FileInputStream fileInputStream=new FileInputStream("result.txt");
+            //FileInputStream fileInputStream=new FileInputStream("result.txt");
             ObjectInputStream ois=new ObjectInputStream(socket.getInputStream());
             String Message= null;
             try {

@@ -3,6 +3,7 @@ package server;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,11 +18,6 @@ import java.util.List;
  */
 public class JsonParser extends UserType {
     List<UserType> userList=new ArrayList<UserType>();
-    //  private int portNumber;
-    //  private int depositNumber;
-//    private String customerName;
-    //  private int initialBalance;
-    //  private BigDecimal upperBound;
 
     public JsonParser() throws Exception {
 
@@ -75,5 +71,21 @@ public class JsonParser extends UserType {
             }
         }
         return null;
+    }
+
+    public JSONObject Connection(){
+
+        JSONParser jasonParser=new JSONParser();
+        try {
+            Object object=jasonParser.parse(new FileReader("src\\main\\java\\server\\core.json"));
+            return (JSONObject) object;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+
     }
 }

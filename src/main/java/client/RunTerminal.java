@@ -1,4 +1,6 @@
 package client;
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -11,10 +13,13 @@ import java.net.UnknownHostException;
  */
 public class RunTerminal {
 
-    public RunTerminal(){
+    public RunTerminal() throws JSONException {
+
+
     try {
+
         InetAddress host = InetAddress.getLocalHost();
-        Socket socket = new Socket(host.getHostAddress(),17129);
+        Socket socket = new Socket(host.getHostAddress(),2525);
 
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(" Hello There");

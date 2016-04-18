@@ -22,7 +22,6 @@ public class UserType {
     public UserType() {
     }
 
-
     public String getCustomerNumber() {
         return customerNumber;
     }

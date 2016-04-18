@@ -74,12 +74,6 @@ public void readXML() throws Exception {
        transactions.add(transaction.item(i).getAttributes().getNamedItem("deposit").getNodeValue());
 
    }
-//    for (String transacting : transactions) {
-//
-//      //  System.out.println("transaction "+"is: "+ transacting);
-//    }
-//    System.out.println(transactions.get(2));
-//    System.out.println(transactions.get(1));
 
     }
 

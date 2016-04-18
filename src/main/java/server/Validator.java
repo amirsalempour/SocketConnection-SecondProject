@@ -18,16 +18,17 @@ public class Validator implements Runnable {
     DataOutputStream dataOutputStream;
     Socket socket;
     boolean stop = true;
-    Logger logger;
+    Logger logger = Logger.getLogger(Validator.class.getName());
     String[] deposits = new String[10];
     int temp = 0;
 
     public Validator() {
     }
 
-    public Validator(Socket socket, Logger logger) {
+    public Validator(Socket socket) {
         this.socket = socket;
-        this.logger = logger;
+       // this.logger = logger;
+
         try {
             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
             OutputStream outputStream = socket.getOutputStream();

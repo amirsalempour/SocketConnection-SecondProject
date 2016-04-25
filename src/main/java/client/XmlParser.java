@@ -6,9 +6,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-
 import java.util.ArrayList;
-
 
 
 /**
@@ -17,66 +15,101 @@ import java.util.ArrayList;
 public class XmlParser {
     private String terminalId;
     private String serverIp;
-    private  int portNumber;
+    private int portNumber;
     public String outLogPath;
     private String Type;
-    //private String
+    DocumentBuilderFactory dbFactory;
+    DocumentBuilder dBuilder;
+    Document doc;
 
-public void readXML() throws Exception {
-
-
-    File file = new File("src\\main\\java\\client/terminal.xml");
-
+    private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
 
-    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-    Document doc = dBuilder.parse(file);
-    doc.getDocumentElement().normalize();
+    public int getPortNumber() {
+        return portNumber;
+    }
 
-    NodeList n1 = doc.getElementsByTagName("terminal");
-    System.out.println("Root element :" + n1.getLength());
+    public void setPortNumber(int portNumber) {
+        this.portNumber = this.portNumber;
+    }
+
+    public String getOutLogPath() {
+        return outLogPath;
+    }
+
+    public void setOutLogPath(String outLogPath) {
+        this.outLogPath = outLogPath;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
+
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
+    }
+
+//    public void setTransactions(ArrayList<Transaction> transactions) {
+//        this.transactions = transactions;
+//    }
+
+    public String getServerIp() {
+        return serverIp;
+    }
+
+    public void setServerIp(String serverIp) {
+        this.serverIp = serverIp;
+    }
+
+    public String getTerminalId() {
+        return terminalId;
+    }
+
+    public void setTerminalId(String terminalId) {
+        this.terminalId = terminalId;
+    }
+
+    public ArrayList readXML() throws Exception {
 
 
+        File file = new File("src\\\\main\\\\java\\\\client/terminal.xml");
+        dbFactory = DocumentBuilderFactory.newInstance().newInstance();
+        dBuilder = dbFactory.newDocumentBuilder();
+        doc = dBuilder.parse(file);
+        NodeList n1 = doc.getElementsByTagName("terminal");
+        NodeList server = doc.getElementsByTagName("server");
+        serverIp = server.item(0).getAttributes().item(0).getNodeValue();
+        portNumber = Integer.parseInt(server.item(0).getAttributes().item(1).getNodeValue());
+        NodeList outLog = doc.getElementsByTagName("outLog");
+        NodeList transaction = doc.getElementsByTagName("transaction");
 
-    NodeList server = doc.getElementsByTagName("server");
-    NodeList outLog = doc.getElementsByTagName("outLog");
-    NodeList nList = doc.getElementsByTagName("transactions");
-    NodeList transaction = doc.getElementsByTagName("transaction");
+        terminalId = n1.item(0).getAttributes().item(0).getNodeValue();
+        Type = n1.item(0).getAttributes().item(1).getNodeValue();
+        serverIp = server.item(0).getAttributes().item(0).getNodeValue();
+        outLogPath = outLog.item(0).getAttributes().item(0).getNodeValue();
+        XmlParser xmlParser = new XmlParser();
+        xmlParser.setPortNumber(portNumber);
 
-    for(int i =0;i <nList.getLength(); i++) {
+        for (int i = 0; i < transaction.getLength(); i++) {
+            Transaction transactionItem = new Transaction();
 
+            transactionItem.id = transaction.item(i).getAttributes().getNamedItem("id").getNodeValue();
+            transactionItem.type = transaction.item(i).getAttributes().getNamedItem("type").getNodeValue();
+            transactionItem.amount = transaction.item(i).getAttributes().getNamedItem("amount").getNodeValue();
+            transactionItem.depositNumber = transaction.item(i).getAttributes().getNamedItem("deposit").getNodeValue();
 
-        org.w3c.dom.Node nNode = nList.item(i);
-        if (nNode.getNodeType() == javax.xml.soap.Node.ELEMENT_NODE) {
+            transactions.add(transactionItem);
 
 
         }
 
+        return transactions;
+//        return null;
     }
-
-
-
-    terminalId= n1.item(0).getAttributes().item(0).getNodeValue();
-    Type =n1.item(0).getAttributes().item(1).getNodeValue();
-    serverIp=server.item(0).getAttributes().item(0).getNodeValue();
-    portNumber=Integer.parseInt(server.item(0).getAttributes().item(1).getNodeValue());
-    outLogPath= outLog.item(0).getAttributes().item(0).getNodeValue();
-
-
-    ArrayList<String> transactions=new ArrayList<String>();
-
-   for (int i=0;i<transaction.getLength();i++) {
-
-       transactions.add(transaction.item(i).getAttributes().getNamedItem("id").getNodeValue());
-       transactions.add(transaction.item(i).getAttributes().getNamedItem("type").getNodeValue());
-       transactions.add(transaction.item(i).getAttributes().getNamedItem("amount").getNodeValue());
-       transactions.add(transaction.item(i).getAttributes().getNamedItem("deposit").getNodeValue());
-
-   }
-
-    }
-
 
 
 }

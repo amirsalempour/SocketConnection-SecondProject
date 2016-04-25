@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Dotin school 6 on 4/16/2016.
  */
-public class JsonParser extends UserType {
+public class JsonParser  {
     List<UserType> userList=new ArrayList<UserType>();
 
     public JsonParser() throws Exception {
@@ -27,52 +27,44 @@ public class JsonParser extends UserType {
 
             JSONObject jsonObject = (JSONObject) object;
 
-//            String name = (String) jsonObject.get("name");
-//            System.out.println(name);
-
-
-
             JSONArray deposits = (JSONArray) jsonObject.get("deposits");
             Iterator iterator = deposits.iterator();
 
             while (iterator.hasNext()) {
-
                 UserType userType = new UserType();
                 JSONObject parse = (JSONObject) iterator.next();
                 userType.setCustomerName((String) parse.get("customer"));
                 userType.setCustomerNumber((String) parse.get("id"));
                 userType.setInitialBalance(Integer.parseInt((String) parse.get("initialBalance")));
                 userType.setUpperBound(Integer.parseInt((String)parse.get("upperBounds")));
+                userList.add(userType);
 
-
-                System.out.println("initial balance is : "+userType.getInitialBalance());
-                System.out.println("initial upperBound is : "+userType.getUpperBound());
-                System.out.println("customer name is: " + userType.getCustomerName());
-                System.out.println("customer number is: " + userType.getCustomerNumber());
-
-
-
-//                System.out.println(iterator.next());
+//                System.out.println("initial balance is : "+userType.getInitialBalance());
+//                System.out.println("initial upperBound is : "+userType.getUpperBound());
+//                System.out.println("customer name is: " + userType.getCustomerName());
+//                System.out.println("customer number is: " + userType.getCustomerNumber());
             }
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+
+
+        public String SearchInFile(String customerNumber){
+        for(UserType user: userList) {
+
+    if(user.getCustomerNumber().compareTo(customerNumber)== 0){
+        System.out.println("customer Number is: "+customerNumber );
 
     }
-    public UserType SearchInFile(String customerNumber){
-        for (UserType userType: userList){
-            if(userType.getCustomerNumber().compareTo(customerNumber)==0){
-                return (UserType) userList;
-            }
         }
-        return null;
-    }
 
+        return customerNumber;
+    }
     public JSONObject Connection(){
 
         JSONParser jasonParser=new JSONParser();
@@ -86,6 +78,6 @@ public class JsonParser extends UserType {
         }
         return null;
 
-
     }
+
 }

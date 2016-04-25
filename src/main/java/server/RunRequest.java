@@ -1,58 +1,40 @@
 package server;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 
-/**
- * Created by Dotin school 6 on 4/11/2016.
- */
 public class RunRequest extends  UserType {
 
     private ServerSocket serverSocket;
-//    private int port;
+
 public RunRequest(){
-    UserType userType=new UserType();
-    userType.getCustomerName();
-    System.out.println("customer name is"+getCustomerName());
-    //setCustomerName();
-  //  super(customerNumber,portNumber,initialBalance,upperBound);
+
+//    UserType userType=new UserType();
+
     try {
-        serverSocket = new ServerSocket(17129);
+        JsonParser jsonParser=new JsonParser();
+        org.json.simple.JSONObject jsonObject=jsonParser.Connection();
+        int portNumber=Integer.parseInt(jsonObject.get("port").toString());
+        serverSocket = new ServerSocket(portNumber);
 
     } catch (IOException e) {
         e.printStackTrace();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
 }
-    
-    public void Validator(){
-        System.out.println();
-
-    }
-
-//    public RunRequest() throws Exception {
-//
-//        port = 2590;
-//        try {
-//            serverSocket = new ServerSocket(port);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     public void handleConnection() throws Exception {
         System.out.println("waiting for client message...");
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
-                new ConnectionHandler(socket);
+                new Validator(socket);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-
-        }//ServerSocketExample,  run request, send result to terminal
+        }
     }
 }

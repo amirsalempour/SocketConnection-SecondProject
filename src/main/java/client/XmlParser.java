@@ -34,45 +34,41 @@ public class XmlParser {
         this.portNumber = this.portNumber;
     }
 
-    public String getOutLogPath() {
-        return outLogPath;
-    }
+//    public String getOutLogPath() {
+//        return outLogPath;
+//    }
 
-    public void setOutLogPath(String outLogPath) {
-        this.outLogPath = outLogPath;
-    }
+//    public void setOutLogPath(String outLogPath) {
+//        this.outLogPath = outLogPath;
+//    }
 
     public String getType() {
         return Type;
     }
 
-    public void setType(String type) {
-        Type = type;
-    }
+//    public void setType(String type) {
+//        Type = type;
+//    }
 
     public ArrayList<Transaction> getTransactions() {
         return transactions;
     }
 
-//    public void setTransactions(ArrayList<Transaction> transactions) {
-//        this.transactions = transactions;
+//    public String getServerIp() {
+//        return serverIp;
 //    }
-
-    public String getServerIp() {
-        return serverIp;
-    }
-
-    public void setServerIp(String serverIp) {
-        this.serverIp = serverIp;
-    }
-
-    public String getTerminalId() {
-        return terminalId;
-    }
-
-    public void setTerminalId(String terminalId) {
-        this.terminalId = terminalId;
-    }
+//
+//    public void setServerIp(String serverIp) {
+//        this.serverIp = serverIp;
+//    }
+//
+//    public String getTerminalId() {
+//        return terminalId;
+//    }
+//
+//    public void setTerminalId(String terminalId) {
+//        this.terminalId = terminalId;
+//    }
 
     public ArrayList readXML(String filePath) throws Exception {
 
@@ -105,12 +101,8 @@ public class XmlParser {
             transactionItem.setDepositNumber( transaction.item(i).getAttributes().getNamedItem("deposit").getNodeValue());
 
             transactions.add(transactionItem);
-
-
         }
-
         return transactions;
-//        return null;
     }
 
 

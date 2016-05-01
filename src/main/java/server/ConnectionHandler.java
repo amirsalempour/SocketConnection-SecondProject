@@ -38,7 +38,7 @@ public class ConnectionHandler implements Runnable {
                 transactionList = (ArrayList<Transaction>) objectInputStream.readObject();
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 for (Transaction trx : transactionList) {
-                    System.out.println(" Client attributes are: " + trx);
+//                    System.out.println(" Client attributes are: " + trx);
 
                       String str =  TransactionValidator.validateTransaction(trx);
 

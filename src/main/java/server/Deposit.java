@@ -64,7 +64,7 @@ public class Deposit {
     public BigDecimal depositRunner(BigDecimal initialBalance, BigDecimal amount) throws InterruptedException {
         Thread.sleep(1000);
         synchronized (this) {
-            return new BigDecimal(String.valueOf(initialBalance.multiply(amount)));
+            return new BigDecimal(String.valueOf(initialBalance.add(amount)));
         }
     }
     public BigDecimal withdrawRunner(BigDecimal initialBalance, BigDecimal amount) throws InterruptedException {

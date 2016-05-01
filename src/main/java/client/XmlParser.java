@@ -6,6 +6,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 
@@ -73,10 +74,10 @@ public class XmlParser {
         this.terminalId = terminalId;
     }
 
-    public ArrayList readXML() throws Exception {
+    public ArrayList readXML(String filePath) throws Exception {
 
 
-        File file = new File("src\\\\main\\\\java\\\\client/terminal.xml");
+        File file = new File(filePath);
         dbFactory = DocumentBuilderFactory.newInstance().newInstance();
         dBuilder = dbFactory.newDocumentBuilder();
         doc = dBuilder.parse(file);
@@ -97,10 +98,11 @@ public class XmlParser {
         for (int i = 0; i < transaction.getLength(); i++) {
             Transaction transactionItem = new Transaction();
 
-            transactionItem.id = transaction.item(i).getAttributes().getNamedItem("id").getNodeValue();
-            transactionItem.type = transaction.item(i).getAttributes().getNamedItem("type").getNodeValue();
-            transactionItem.amount = transaction.item(i).getAttributes().getNamedItem("amount").getNodeValue();
-            transactionItem.depositNumber = transaction.item(i).getAttributes().getNamedItem("deposit").getNodeValue();
+
+            transactionItem.setId(transaction.item(i).getAttributes().getNamedItem("id").getNodeValue());
+            transactionItem.setType( transaction.item(i).getAttributes().getNamedItem("type").getNodeValue());
+            transactionItem.setAmount(new BigDecimal(transaction.item(i).getAttributes().getNamedItem("amount").getNodeValue()));
+            transactionItem.setDepositNumber( transaction.item(i).getAttributes().getNamedItem("deposit").getNodeValue());
 
             transactions.add(transactionItem);
 

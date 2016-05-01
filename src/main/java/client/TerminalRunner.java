@@ -16,35 +16,29 @@ import java.util.logging.SimpleFormatter;
 /**
  * Created by Dotin school 6 on 4/11/2016.
  */
-public class RunTerminal extends XmlParser {
+public class TerminalRunner {
 
-
-    public RunTerminal() throws JSONException {
-
+    public TerminalRunner(String filePath) throws JSONException {
         try {
-            Logger logger = Logger.getLogger("myLogs");
-            FileHandler fileHandler = new FileHandler("src\\logFiles\\ClientLogs/result1.log");
+            Logger logger = Logger.getLogger("ClientLogs");
+            FileHandler fileHandler = new FileHandler("src/logFiles/ClientLogs/result1.log");
             logger.addHandler(fileHandler);
             SimpleFormatter formatter = new SimpleFormatter();
             fileHandler.setFormatter(formatter);
-            logger.info("my logs");
+            logger.info("Client logs");
             XmlParser xmlParser = new XmlParser();
             int portNumber;
-            InetAddress host = InetAddress.getLocalHost();
             ArrayList messages = null;
 
-            messages = xmlParser.readXML();
+            messages = xmlParser.readXML(filePath);
             portNumber = xmlParser.getPortNumber();
-            Socket socket = new Socket(host.getHostAddress(), portNumber);
+            Socket socket = new Socket(InetAddress.getLocalHost(), portNumber);
 
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
            for (Object messageOut: messages) {
                objectOutputStream.writeObject(messages);
            }
-
-
-
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
             try {
                 String Message = (String) objectInputStream.readObject();
@@ -56,7 +50,7 @@ public class RunTerminal extends XmlParser {
                 }
                 objectInputStream.close();
             } catch (Exception e) {
-                System.out.println("exception " + e);
+
             }
           objectOutputStream.close();
 

@@ -8,6 +8,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,14 +17,16 @@ import java.util.List;
 /**
  * Created by Dotin school 6 on 4/16/2016.
  */
-public class JsonParser  {
-    List<UserType> userList=new ArrayList<UserType>();
+public class JsonParser {
+
+    List<Deposit> depositList = new ArrayList<Deposit>();
+   public static Object object;
 
     public JsonParser() throws Exception {
 
         JSONParser parser = new JSONParser();
         try {
-            Object object = parser.parse(new FileReader("src\\main\\java\\server\\core.json"));
+            Object object = parser.parse(new FileReader("src/main/java/server/core.json"));
 
             JSONObject jsonObject = (JSONObject) object;
 
@@ -31,20 +34,15 @@ public class JsonParser  {
             Iterator iterator = deposits.iterator();
 
             while (iterator.hasNext()) {
-                UserType userType = new UserType();
                 JSONObject parse = (JSONObject) iterator.next();
-                userType.setCustomerName((String) parse.get("customer"));
-                userType.setCustomerNumber((String) parse.get("id"));
-                userType.setInitialBalance(Integer.parseInt((String) parse.get("initialBalance")));
-                userType.setUpperBound(Integer.parseInt((String)parse.get("upperBounds")));
-                userList.add(userType);
+                String customerName = (String) parse.get("customer");
+                String id = (String) parse.get("id");
+                BigDecimal initialBalance = BigDecimal.valueOf(Integer.parseInt((String) parse.get("initialBalance")));
+                BigDecimal upperBounds = BigDecimal.valueOf(Integer.parseInt((String) parse.get("upperBounds")));
+                Deposit deposit = new Deposit(customerName, id, initialBalance, upperBounds);
+                depositList.add(deposit);
 
-//                System.out.println("initial balance is : "+userType.getInitialBalance());
-//                System.out.println("initial upperBound is : "+userType.getUpperBound());
-//                System.out.println("customer name is: " + userType.getCustomerName());
-//                System.out.println("customer number is: " + userType.getCustomerNumber());
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -52,24 +50,20 @@ public class JsonParser  {
         }
     }
 
+    public String searchInFile(String customerNumber) {
+        for (Deposit user : depositList) {
+            if (user.getCustomerNumber().compareTo(customerNumber) == 0) {
 
-
-        public String SearchInFile(String customerNumber){
-        for(UserType user: userList) {
-
-    if(user.getCustomerNumber().compareTo(customerNumber)== 0){
-        System.out.println("customer Number is: "+customerNumber );
-
-    }
+                return user.getCustomerNumber();
+            }
         }
-
-        return customerNumber;
+     return null;
     }
-    public JSONObject Connection(){
 
-        JSONParser jasonParser=new JSONParser();
+    public JSONObject connect() { //todo :O give a better name
+        JSONParser jasonParser = new JSONParser();
         try {
-            Object object=jasonParser.parse(new FileReader("src\\main\\java\\server\\core.json"));
+         object = jasonParser.parse(new FileReader("src\\main\\java\\server\\core.json"));
             return (JSONObject) object;
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,7 +71,6 @@ public class JsonParser  {
             e.printStackTrace();
         }
         return null;
-
     }
 
 }
